@@ -75,4 +75,4 @@ installapp.shz: Executing command: app/bin/config.sh --register myhost
   config.sh: Configuring app
   config.sh: Starting app
 ```
-``
+
