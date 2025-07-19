@@ -12,7 +12,7 @@ o A pre-extract <command> in <dir> can be specified to be extracted and run befo
 o shz_version environment variable can be set to get the version of the script using 'v-shz' parameter.
 
 Example usage:
-$ shz_version=1.2 mkshz install.shz app/ bin/config.sh --pre-extract bin/pre-stop.bash --exclude=.git --exclude=*.o
+$ shz_version=v1.2 mkshz install.shz app/ bin/config.sh --pre-extract bin/pre-stop.bash --exclude=.git --exclude=*.o
 
 Notes:
 o The <command> arguments are relative to <dir>.
@@ -49,7 +49,7 @@ dir="$dir"
 pre="$pre"
 cmd="$cmd"
 shz="\${0##*/}"
-[ "\$1" = "v-shz" ] && echo "$version" && exit 0
+[ "\$1" = "v-shz" ] && echo "\$version" && exit 0
 [ "\$1" = "x-shz" ] && cmd="" pre=""
 EOF
 cat - <<'EOF'
