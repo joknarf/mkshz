@@ -19,10 +19,11 @@ Creates a shell script `<file.shz>` with embedded tgz archive created from `<dir
 * The script will extract the archive to the current directory on execution.
 * A `<command>` in `<dir>` can be specified to run after extraction with arguments passed to `<file.shz>`.
 * A pre-extract `<command>` in `<dir>` can be specified to be extracted and run before the whole archive is extracted.
+o shz_version environment variable can be set to get the version of the script using 'v-shz' parameter.
 
 Example usage:
 ```
-$ mkshz install.shz app/ bin/config.sh --pre-extract bin/pre-stop.bash --exclude=.git --exclude=*.o
+$ shz_version=1.1.0 mkshz install.shz app/ bin/config.sh --pre-extract bin/pre-stop.bash --exclude=.git --exclude=*.o
 ```
 Notes:
 * The `<command>` arguments are relative to `<dir>`.
