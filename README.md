@@ -27,7 +27,7 @@ Notes:
 $ mkshz installapp.shz app bin/config.sh --pre-extract bin/stopapp.sh --exclude=.git
 ```
 
-* Generated script:
+* Generated script `<installapp.shz>`:
 ```
 #!/bin/bash
 # Script created with mkshz
@@ -64,3 +64,15 @@ exit 1
 __tgz__ ====== binary data starts here ==========================================
 <tgz binary>....
 ```
+* script execution
+```
+$ ./installapp.shz --register myhost
+installapp.shz: Extracting/Executing pre-extract script (app/bin/stopapp.sh)
+  stopapp.sh: Stopping app
+  stopapp.sh: Done
+installapp.shz: Extracting archive directory 'app' in '/myapp/distrib'
+installapp.shz: Executing command: app/bin/config.sh --register myhost
+  config.sh: Configuring app
+  config.sh: Starting app
+```
+``
