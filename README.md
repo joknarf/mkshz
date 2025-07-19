@@ -3,6 +3,7 @@ self extracting shell gzip tarball packager.
 * Simple shell script to generate self extracting shell script with embedded gzipped tarball.  
 * Minimalist universal packager with pre / post install command without any complex package factory to setup.  
 * Simple deployment of application using simple unique shell script package.
+* Alternative to rpm/deb/... factory for simple projects
 
 ## prerequisites
 
