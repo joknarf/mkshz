@@ -67,7 +67,7 @@ __tgz__ ====== binary data starts here =========================================
 * script execution
 ```
 $ ./installapp.shz --register myhost
-installapp.shz: Extracting/Executing pre-extract script (app/bin/stopapp.sh)
+installapp.shz: Extracting/Executing pre-extract script: app/bin/stopapp.sh
   stopapp.sh: Stopping app
   stopapp.sh: Done
 installapp.shz: Extracting archive directory 'app' in '/myapp/distrib'
