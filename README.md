@@ -34,7 +34,7 @@ Notes:
 ## Example
 
 ```
-$ mkshz installapp.shz app bin/config.sh --pre-extract bin/stopapp.sh --exclude=.git
+$ mkshz installapp.shz app bin/setup.sh --pre-extract bin/stopapp.sh --exclude=.git
 ```
 
 * Generated script `<installapp.shz>`:
@@ -44,14 +44,14 @@ $ mkshz installapp.shz app bin/config.sh --pre-extract bin/stopapp.sh --exclude=
 # This script extracts embedded tgz archive
 # extract archive directory: 'app'
 # pre-extract command: 'app/bin/stopapp.sh'
-# post-extract command: 'app/bin/config.sh'
+# post-extract command: 'app/bin/setup.sh'
 # to extract the archive without command execution, use:
 #  ./installapp.shz x-shz
 # shz_verbose=1 env variable can be set to enable tar output
 #
 dir="app"
 pre="app/bin/stopapp.sh"
-cmd="app/bin/config.sh"
+cmd="app/bin/setup.sh"
 shz="${0##*/}"
 [ "$1" = "x-shz" ] && cmd="" pre=""
 extract() {
@@ -62,7 +62,7 @@ extract() {
 [ "$pre" ] && {
   echo "$shz: Extracting/Executing pre-extract script ($pre)" >&2
   extract "$pre"
-  "$pre" || { echo "$shz: Error: Failed to execute pre-extract script ($pre)" >&2; exit 1; }
+  "$pre" || { echo "$shz: Error: Failed to execute pre-extract script: $pre" >&2; exit 1; }
 }
 echo "$shz: Extracting archive directory '$dir' in '$PWD'" >&2
 extract
@@ -76,13 +76,12 @@ __tgz__ ====== binary data starts here =========================================
 ```
 * script execution
 ```
-$ ./installapp.shz --register myhost
+user@host:/myapp/distrib $ ./installapp.shz --register myhost
 installapp.shz: Extracting/Executing pre-extract script: app/bin/stopapp.sh
   stopapp.sh: Stopping app
   stopapp.sh: Done
 installapp.shz: Extracting archive directory 'app' in '/myapp/distrib'
-installapp.shz: Executing command: app/bin/config.sh --register myhost
+installapp.shz: Executing command: app/bin/setup.sh --register myhost
   config.sh: Configuring app
   config.sh: Starting app
 ```
-
