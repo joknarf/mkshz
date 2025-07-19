@@ -19,7 +19,7 @@ Creates a shell script `<file.shz>` with embedded tgz archive created from `<dir
 * The script will extract the archive to the current directory on execution.
 * A `<command>` in `<dir>` can be specified to run after extraction with arguments passed to `<file.shz>`.
 * A pre-extract `<command>` in `<dir>` can be specified to be extracted and run before the whole archive is extracted.
-* shz_version environment variable can be set to get the version of the script using 'v-shz' parameter.
+* shz_version environment variable can be set to get the version of the archive using 'v-shz' parameter.
 
 Example usage:
 ```
