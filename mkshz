@@ -18,7 +18,7 @@ Notes:
 o The <command> arguments are relative to <dir>.
 o The script generated will be created with a shebang line for bash.
 o The pre-extract <command> will be extracted and executed before extracting whole archive
-o The pre-extract command does not receive any arguments.
+o The pre-extract <command> does not receive any arguments.
 o If the pre-extract <command> exit code is not zero, the script will abort whole extraction.
 EOF
 version=${shz_version:-1.0}
