@@ -43,8 +43,8 @@ $ mkshz installapp.shz app bin/config.sh --pre-extract bin/stopapp.sh --exclude=
 # Script created with mkshz
 # This script extracts embedded tgz archive
 # extract archive directory: 'app'
-# command executed after extraction: 'app/bin/config.sh'
 # pre-extract command: 'app/bin/stopapp.sh'
+# post-extract command: 'app/bin/config.sh'
 # to extract the archive without command execution, use:
 #  ./installapp.shz x-shz
 # shz_verbose=1 env variable can be set to enable tar output
