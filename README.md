@@ -58,10 +58,10 @@ dir="app"
 pre="app/bin/stopapp.sh"
 cmd="app/bin/setup.sh"
 shz="${0##*/}"
+[ "$shz_verbose" ] && v=v || v=""
 [ "$1" = "v-shz" ] && echo "$version" && exit 0
 [ "$1" = "x-shz" ] && cmd="" pre=""
 extract() {
-    [ "$shz_verbose" ] && v=v || v=""
     sed '1,/^__tgz__/d' "$0"| tar xz${v}f - "$@" >&2 || exit 1
 }
 # Pre-extract script:
