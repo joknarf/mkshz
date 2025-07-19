@@ -32,7 +32,7 @@ Notes:
 * The `<command>` arguments are relative to `<dir>`.
 * The script generated will be created with a shebang line for bash.
 * The pre-extract `<command>` will be extracted and executed before extracting whole archive
-* The pre-extract command does not receive any arguments.
+* The pre-extract `<command>` does not receive any arguments.
 * If the pre-extract `<command>` exit code is not zero, the script will abort whole extraction.
 
 ## Example
