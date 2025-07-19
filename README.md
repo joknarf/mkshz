@@ -61,9 +61,11 @@ shz="${0##*/}"
 [ "$shz_verbose" ] && v=v || v=""
 [ "$1" = "v-shz" ] && echo "$version" && exit 0
 [ "$1" = "x-shz" ] && cmd="" pre=""
+
 extract() {
   sed '1,/^__tgz__/d' "$0"| tar xz${v}f - "$@" >&2 || exit 1
 }
+
 # Pre-extract script:
 [ "$pre" ] && {
   echo "$shz: Extracting/Executing pre-extract script ($pre)" >&2
