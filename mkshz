@@ -37,8 +37,8 @@ shift 3
 # Script created with mkshz
 # This script extracts embedded tgz archive 
 # extract archive directory: '${dir}'
-# command executed after extraction: '${cmd:-none}'
 # pre-extract command: '${pre:-none}'
+# post-extract command: '${cmd:-none}'
 # to extract the archive without command execution, use:
 #  ./${shz##*/} x-shz
 # shz_verbose=1 env variable can be set to enable tar output
