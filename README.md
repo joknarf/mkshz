@@ -1,3 +1,5 @@
+[![bash](https://img.shields.io/badge/OS-Linux%20|%20macOS%20|%20SunOS%20...-blue.svg)]()
+
 # mkshz
 self extracting shell gzip tarball packager.  
 * Simple shell script to generate self extracting shell script with embedded gzipped tarball.  
