@@ -16,7 +16,6 @@ $ mkshz install.shz app/ bin/config.sh --pre-extract bin/pre-stop.bash --exclude
 Notes:
 o The <command> arguments are relative to <dir>.
 o The script generated will be created with a shebang line for bash.
-o The script generated will extract the archive to the current directory.
 o The pre-extract <command> will be extracted and executed before extracting whole archive
 o The pre-extract command does not receive any arguments.
 o If the pre-extract <command> exit code is not zero, the script will abort whole extraction.
