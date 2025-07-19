@@ -59,7 +59,7 @@ EOF
 [ "$pre" ] &&  cat - <<'EOF'
 # Pre-extract script:
 [ "$pre" ] && {
-  echo "$shz: Extracting/Executing pre-extract script ($pre)" >&2
+  echo "$shz: Extracting/Executing pre-extract script: $pre" >&2
   extract "$pre"
   "$pre" || { echo "$shz: Error: Failed to execute pre-extract script ($pre)" >&2; exit 1; }
 }
