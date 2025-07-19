@@ -23,7 +23,7 @@ Creates a shell script `<file.shz>` with embedded tgz archive created from `<dir
 
 Example usage:
 ```
-$ shz_version=v1.1.0 mkshz install.shz app/ bin/config.sh --pre-extract bin/pre-stop.bash --exclude=.git --exclude=*.o
+$ shz_version=v1.2 mkshz install.shz app/ bin/config.sh --pre-extract bin/pre-stop.bash --exclude=.git --exclude=*.o
 ```
 Notes:
 * The `<command>` arguments are relative to `<dir>`.
@@ -35,7 +35,7 @@ Notes:
 ## Example
 
 ```
-$ shz_version=1.0 mkshz installapp.shz app bin/setup.sh --pre-extract bin/stopapp.sh --exclude=.git
+$ shz_version=v1.2 mkshz installapp.shz app bin/setup.sh --pre-extract bin/stopapp.sh --exclude=.git
 ```
 
 * Generated script `<installapp.shz>`:
@@ -50,7 +50,7 @@ $ shz_version=1.0 mkshz installapp.shz app bin/setup.sh --pre-extract bin/stopap
 #  ./installapp.shz x-shz
 # shz_verbose=1 env variable can be set to enable tar output
 #
-version=1.0
+version="v1.2"
 dir="app"
 pre="app/bin/stopapp.sh"
 cmd="app/bin/setup.sh"
