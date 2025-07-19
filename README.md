@@ -1,6 +1,7 @@
 # mkshz
-self extracting shell gzip tarball creator  
-Simple shell script to generate self extracting shell script with embedded gzipped tarball
+self extracting shell gzip tarball creator.  
+Simple shell script to generate self extracting shell script with embedded gzipped tarball.  
+Minimalist universal package creator with pre / post install command without any complex package factory to setup. 
 
 ## usage
 usage: `mkshz <file.shz> <dir> [<command> [--pre-extract <command>] <tar options>]`
