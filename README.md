@@ -38,7 +38,7 @@ Notes:
 $ shz_version=v1.2 mkshz installapp.shz app bin/setup.sh --pre-extract bin/stopapp.sh --exclude=.git
 ```
 
-* Generated script `<installapp.shz>`:
+* Generated script `installapp.shz`:
 ```
 #!/bin/bash
 # Script created with mkshz
