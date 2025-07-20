@@ -11,8 +11,7 @@ self extracting shell gzip tarball packager.
 
 * bash
 * sed (gnu/bsd)
-* tar
-* gzip
+* tar / gzip
 
 ## usage
 
