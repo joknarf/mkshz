@@ -3,12 +3,13 @@
 # Author: joknarf
 #
 [ ! "$2" ] && cat - <<'EOF' >&2 && exit 1
-usage: mkshz <file.shz> <dir> [<command> [--pre-extract <command>] <tar options>]
+usage: mkshz <file.shz> <dir> [<command> [--tmp-exec] [--pre-extract <command>] <tar options>]
 
 Creates a shell script <file.shz> with embedded tgz archive created from <dir> content.
 o The script will extract the archive to the current directory on execution.
 o A <command> in <dir> can be specified to run after extraction with arguments passed to <file.shz>.
 o A pre-extract <command> in <dir> can be specified to be extracted and run before the whole archive is extracted.
+o if `--tmp-exec` flag is set the resulting script will extract to /tmp/shz.XXXX executes the commands and clean the /tmp/shz.XXXXX
 o shz_version environment variable can be set to get the version of the archive using 'v-shz' parameter.
 
 Example usage:
@@ -60,6 +61,7 @@ __tpl__ ======= self-extracting shell script template starts here ==============
 # to extract the archive without command execution, use:
 #  ./<shz> x-shz
 # shz_verbose=1 env variable can be set to enable tar output
+# shz_target_dir can be set to specify the target directory for extraction
 #
 version="<version>"
 dir="<dir>"
@@ -67,14 +69,15 @@ pre="<pre>"
 cmd="<cmd>"
 tmpexec="<tmpexec>"
 shz="${0##*/}"
-[ ! "$shz_target_dir" ] && [ "$tmpexec" ] && {
-  shz_target_dir=$(mktemp -d /tmp/shz.XXXXXX) || exit 1
-  trap 'rm -rf "$shz_target_dir"' EXIT
-}
-: ${shz_target_dir:=$PWD}
 [ "$shz_verbose" ] && v=v || v=""
 [ "$1" = "v-shz" ] && echo "$version" && exit 0
 [ "$1" = "x-shz" ] && cmd="" pre=""
+
+[ ! "$shz_target_dir" ] && [ "$tmpexec" ] && {
+  shz_target_dir=$(mktemp -d /tmp/shz.XXXXXX) || exit 1
+  [ "$cmd" ] && trap 'rm -rf "$shz_target_dir"' EXIT
+}
+: ${shz_target_dir:=$PWD}
 
 extract() {
   sed '1,/^__tgz__/d' "$0"| (cd "$shz_target_dir" && tar xz${v}f - "$@" >&2) || exit 1
