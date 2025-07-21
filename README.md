@@ -13,6 +13,8 @@ self extracting shell gzip tarball packager.
 * sed (gnu/bsd)
 * tar / gzip
 
+you can use mkshz.compat if using old OS distribution (tar/sed missing features)
+
 ## usage
 
 usage: `mkshz <file.shz> <dir> [<command> [--tmp-exec] [--pre-extract <command>] <tar options>]`
