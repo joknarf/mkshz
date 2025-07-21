@@ -80,7 +80,7 @@ shz="${0##*/}"
 : ${shz_target_dir:=$PWD}
 
 extract() {
-  sed '1,/^__tgz__/d' "$0"| (cd "$shz_target_dir" && tar xz${v}f - "$@" >&2) || exit 1
+  sed '1,/^__tgz__/d' "$0"| tar xz${v}f - -C "$shz_target_dir" "$@" >&2 || exit 1
 }
 
 # Pre-extract script:
