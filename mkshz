@@ -75,7 +75,7 @@ shz="${0##*/}"
 
 [ ! "$shz_target_dir" ] && [ "$tmpexec" ] && {
   shz_target_dir=$(mktemp -d /tmp/shz.XXXXXX) || exit 1
-  [ "$cmd" ] && trap 'rm -rf "$shz_target_dir"' EXIT
+  [ "$cmd" ] && trap 'echo "$shz: Cleaning up temporary directory: $shz_target_dir" >&2; rm -rf "$shz_target_dir"' EXIT
 }
 : ${shz_target_dir:=$PWD}
 
