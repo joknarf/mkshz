@@ -26,60 +26,73 @@ shz="$1"
 dir="${2%/}"
 cmd="${3#./}"
 shift 3
+[ "$1" = "--tmp-exec" ] && tmpexec=1 && shift || tmpexec=""
 [ "$1" = "--pre-extract" ] && pre="${2#./}" && shift 2 || pre=""
 
 [ ! -d "$dir" ] && echo "Error: Directory $dir does not exist" >&2 && exit 1
 [ "$cmd" ] && cmd="$dir/$cmd" && [ ! -x "$cmd" ] && echo "Error: Command '$cmd' not found or not executable" >&2 && exit 1
 [ "$pre" ] && pre="$dir/$pre" && [ ! -x "$pre" ] && echo "Error: Pre-extract commmand '$pre' not found or not executable" >&2 && exit 1
 
+tar=$(command -v gtar tar)
+tar="${tar%%$'\n'*}"
+
 (
-  cat - <<EOF
-#!/bin/bash
-# Script created with mkshz
-# This script extracts embedded tgz archive 
-# extract archive directory: '${dir}'
-# pre-extract command: '${pre:-none}'
-# post-extract command: '${cmd:-none}'
-# to extract the archive without command execution, use:
-#  ./${shz##*/} x-shz
-# shz_verbose=1 env variable can be set to enable tar output
-#
-version="$version"
-dir="$dir"
-pre="$pre"
-cmd="$cmd"
-shz="\${0##*/}"
-[ "\$shz_verbose" ] && v=v || v=""
-[ "\$1" = "v-shz" ] && echo "\$version" && exit 0
-[ "\$1" = "x-shz" ] && cmd="" pre=""
-
-extract() {
-  sed '1,/^__tgz__/d' "\$0"| tar xz\${v}f - "\$@" >&2 || exit 1
-}
-
-EOF
-# bas64 encode pre-extract script
-[ "$pre" ] &&  cat - <<'EOF'
-# Pre-extract script:
-[ "$pre" ] && {
-  echo "$shz: Extracting/Executing pre-extract script: $pre" >&2
-  extract "$pre"
-  "$pre" || { echo "$shz: Error: Failed to execute pre-extract script ($pre)" >&2; exit 1; }
-}
-EOF
-
-  cat - <<'EOF'
-echo "$shz: Extracting archive directory '$dir' in '$PWD'" >&2
-extract
-[ "$cmd" ] || exit 0
-echo "$shz: Executing command: $cmd $*" >&2
-[ -x "$cmd" ] && exec "$cmd" "$@"
-echo "$shz: Error: Command $cmd not found or not executable." >&2
-exit 1
-__tgz__ ====== binary data starts here ==========================================
-EOF
-tar cvzf - "$@" "$dir" 
+  sed -e '1,/^__tpl__/d' \
+      -e "s#<dir>#$dir#" \
+      -e "s#<pre>#$pre#" \
+      -e "s#<cmd>#$cmd#" \
+      -e "s#<shz>#${shz##*/}#" \
+      -e "s#<version>#$version#" \
+      -e "s#<tmpexec>#$tmpexec#" "$0"
+  $tar cvzf - "$@" "$dir"
 ) >"$shz" || { echo "Error: Failed to create $shz" >&2; exit 1; }
 chmod +x "$shz"
 printf '\n%s\n' "$shz created with embedded tgz archive from '$dir'"
 exit 0
+
+__tpl__ ======= self-extracting shell script template starts here =================================
+#!/bin/bash
+# Script created with mkshz
+# This script extracts embedded tgz archive 
+# extract archive directory: '<dir>'
+# pre-extract command: '<pre>'
+# post-extract command: '<cmd>'
+# to extract the archive without command execution, use:
+#  ./<shz> x-shz
+# shz_verbose=1 env variable can be set to enable tar output
+#
+version="<version>"
+dir="<dir>"
+pre="<pre>"
+cmd="<cmd>"
+tmpexec="<tmpexec>"
+shz="${0##*/}"
+[ ! "$shz_target_dir" ] && [ "$tmpexec" ] && {
+  shz_target_dir=$(mktemp -d /tmp/shz.XXXXXX) || exit 1
+  trap 'rm -rf "$shz_target_dir"' EXIT
+}
+: ${shz_target_dir:=$PWD}
+[ "$shz_verbose" ] && v=v || v=""
+[ "$1" = "v-shz" ] && echo "$version" && exit 0
+[ "$1" = "x-shz" ] && cmd="" pre=""
+
+extract() {
+  sed '1,/^__tgz__/d' "$0"| (cd "$shz_target_dir" && tar xz${v}f - "$@" >&2) || exit 1
+}
+
+# Pre-extract script:
+[ "$pre" ] && {
+  echo "$shz: Extracting/Executing pre-extract script: $pre" >&2
+  extract "$pre"
+  "$shz_target_dir/$pre" || { echo "$shz: Error: Failed to execute pre-extract script ($pre)" >&2; exit 1; }
+}
+echo "$shz: Extracting archive directory '$dir' in '$shz_target_dir'" >&2
+extract
+[ "$cmd" ] || exit 0
+cmd="$shz_target_dir/$cmd"
+echo "$shz: Executing command: $cmd $*" >&2
+[ ! -x "$cmd" ] && echo "$shz: Error: Command $cmd not found or not executable." >&2 && exit 1
+"$cmd" "$@"
+exit $?
+
+__tgz__ ====== binary data starts here ==========================================
