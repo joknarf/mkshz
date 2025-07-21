@@ -91,8 +91,11 @@ echo "$shz: Executing command: $cmd $*" >&2
 "$cmd" "$@"
 exit $?
 
-__tgz__ ====== binary data starts here ==========================================```
+__tgz__ ====== binary data starts here ==========================================
+```
+
 * script execution
+
 ```
 user@host:/myapp/distrib $ ./installapp.shz --register myhost
 installapp.shz: Extracting/Executing pre-extract script: app/bin/stopapp.sh
