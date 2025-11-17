@@ -30,6 +30,7 @@ Creates a shell script `<file.shz>` with embedded tgz archive created from `<dir
 * shz_version environment variable can be set to get the version of the archive using `v-shz` parameter.
 
 Example usage:
+
 ```
 $ shz_version=v1.2 mkshz install.shz app/ bin/config.sh --pre-extract bin/pre-stop.bash --exclude=.git --exclude=*.o
 ```
@@ -47,6 +48,7 @@ $ shz_version=v1.2 mkshz installapp.shz app bin/setup.sh --pre-extract bin/stopa
 ```
 
 * Generated script `installapp.shz`:
+
 ```
 #!/bin/bash                                                                                                                                                                         
 # Script created with mkshz
