@@ -42,7 +42,8 @@ jobs:
 
       - name: Build DEB
         run: |
-          fpm $FPM_BASE -t deb --prefix=/usr --description="$DESC" $TOOL_PATH=/bin/$TOOL
+          BUILD_EPOCH=$(date +%s)
+          fpm $FPM_BASE -t deb --prefix=/usr --description="$DESC" --deb-field "Build-Date:$BUILD_EPOCH" $TOOL_PATH=/bin/$TOOL
           ln -s ${TOOL}_${VERSION}_all.deb $TOOL.deb
 
       - name: Build RPM
