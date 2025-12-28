@@ -19,6 +19,7 @@ env:
     -m joknarf@free.fr
     -n ${{ github.event.repository.name }}
     --url=https://github.com/${{ github.repository }}
+    --vendor=https://joknarf.github.io/joknarf-tools
     -v ${{ github.event.release.tag_name }}
 
 jobs:
