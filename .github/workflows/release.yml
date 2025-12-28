@@ -58,7 +58,7 @@ jobs:
         run: |
           cp $TOOL.deb deb/pool/main
           cd deb
-          git add deb/pool/main/$TOOL.deb
+          git add pool/main/$TOOL.deb
           git commit -m "Update $TOOL.deb to $VERSION" || echo "No changes to commit"
           git push
         env:
